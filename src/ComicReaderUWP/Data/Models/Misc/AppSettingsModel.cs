@@ -272,6 +272,26 @@ internal static class AppSettingsModel
         }
     }
 
+    public const double MinLibraryItemScale = 0.6;
+    public const double MaxLibraryItemScale = 2.0;
+
+    /// <summary>
+    /// Zoom factor of the cards on the library page (1.0 = default size).
+    /// </summary>
+    public static double LibraryItemScale
+    {
+        get
+        {
+            return _db.Read(model => model.LibraryItemScale ?? 1.0);
+        }
+        set
+        {
+            double scale = Math.Clamp(value, MinLibraryItemScale, MaxLibraryItemScale);
+            _db.Write(model => model.LibraryItemScale = scale);
+            _db.Save();
+        }
+    }
+
     public static int PreloadPagesAfter
     {
         get
@@ -806,6 +826,9 @@ internal static class AppSettingsModel
 
         [JsonPropertyName("PreloadPagesAfter")]
         public int? PreloadPagesAfter { get; set; }
+
+        [JsonPropertyName("LibraryItemScale")]
+        public double? LibraryItemScale { get; set; }
 
         [JsonPropertyName("PreloadPagesBefore")]
         public int? PreloadPagesBefore { get; set; }

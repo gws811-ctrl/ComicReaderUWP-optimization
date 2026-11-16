@@ -32,6 +32,45 @@ internal sealed partial class ComicSelectionView : BaseUserControl
 {
     private const string TAG = nameof(ComicSelectionView);
 
+    /// <summary>
+    /// Card size at zoom factor 1.0. Everything inside the card is laid out relative to this box,
+    /// so scaling the box scales the whole card without clipping its content.
+    /// </summary>
+    private const double BaseItemWidth = 160.0;
+    private const double BaseItemHeight = 300.0;
+
+    private double _itemScale = 1.0;
+
+    /// <summary>
+    /// Zoom factor of the library cards. 1.0 is the default size.
+    /// </summary>
+    public double ItemScale
+    {
+        get => _itemScale;
+        set
+        {
+            double scale = System.Math.Clamp(value, AppSettingsModel.MinLibraryItemScale, AppSettingsModel.MaxLibraryItemScale);
+            if (System.Math.Abs(_itemScale - scale) < 0.001)
+            {
+                return;
+            }
+
+            _itemScale = scale;
+            ApplyItemScale();
+        }
+    }
+
+    private void ApplyItemScale()
+    {
+        if (ItemsGrid is null)
+        {
+            return;
+        }
+
+        ItemsGrid.DesiredWidth = BaseItemWidth * _itemScale;
+        ItemsGrid.ItemHeight = BaseItemHeight * _itemScale;
+    }
+
     public delegate void GroupCollapseRequestedEventHandler(ComicGroupViewModel group);
     public event GroupCollapseRequestedEventHandler? GroupCollapseRequested;
 
@@ -351,6 +390,8 @@ internal sealed partial class ComicSelectionView : BaseUserControl
         {
             Logger.AssertNotReachHere("2E6B41D8795C0FA3");
         }
+
+        ApplyItemScale();
     }
 
     private void ItemsGrid_Unloaded(object sender, RoutedEventArgs e)

@@ -83,6 +83,7 @@
                     VerticalAlignment="Bottom"
                     Orientation="Horizontal"
                     Spacing="5">
+                    <controls:LibraryZoomControl x:Name="LibraryZoom" />
                     <controls:ViewTypeSelector x:Name="ViewTypeSelector" />
                     <DropDownButton x:Name="SortAndGroupDropDownButton">
                         <DropDownButton.Content>

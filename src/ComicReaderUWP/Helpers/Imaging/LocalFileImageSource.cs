@@ -15,6 +15,12 @@ internal sealed partial class LocalFileImageSource : IImageSource
 {
     private const string TAG = nameof(LocalFileImageSource);
 
+    /// <summary>
+    /// Larger read buffer plus a sequential-scan hint: comic pages are read front to back and are
+    /// often stored on spinning disks, where the default 4 KB buffer causes excessive seeks.
+    /// </summary>
+    private const int FileStreamBufferSize = 1 << 20;
+
     private readonly string _path;
     private readonly string _uri;
     private readonly ImageLoaderSchedulerGroup _preferredSchedulerGroup;
@@ -55,7 +61,7 @@ internal sealed partial class LocalFileImageSource : IImageSource
             Stream? stream = null;
             try
             {
-                stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, FileStreamBufferSize, FileOptions.SequentialScan);
             }
             catch (Exception ex)
             {

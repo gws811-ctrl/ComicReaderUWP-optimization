@@ -1146,4 +1146,7 @@ $info</value>
   <data name="WindowN" xml:space="preserve">
     <value>視窗 $n</value>
   </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>縮放</value>
+  </data>
 </root>

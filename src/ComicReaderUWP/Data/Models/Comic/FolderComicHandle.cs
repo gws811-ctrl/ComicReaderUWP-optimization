@@ -240,7 +240,7 @@ internal partial class FolderComicHandle : ComicHandle
             string imageFile = _imageFiles[index];
             try
             {
-                return new FileStream(imageFile, FileMode.Open, FileAccess.Read);
+                return new FileStream(imageFile, FileMode.Open, FileAccess.Read, FileShare.Read, 1 << 20, FileOptions.SequentialScan);
             }
             catch (FileNotFoundException ex)
             {

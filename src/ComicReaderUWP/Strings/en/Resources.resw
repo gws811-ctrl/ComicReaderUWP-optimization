@@ -1150,4 +1150,7 @@ $info</value>
   <data name="WindowN" xml:space="preserve">
     <value>Window $n</value>
   </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
 </root>

@@ -65,25 +65,42 @@
         </ResourceDictionary>
     </base:BaseContentDialog.Resources>
 
-    <Grid>
-        <StackPanel Orientation="Vertical">
-            <TextBlock x:Uid="WatchingFolders" />
-            <Grid Height="10" />
-            <ListView
-                ItemTemplateSelector="{StaticResource FolderItemTemplateSelector}"
-                ItemsSource="{x:Bind FolderItemDataSource}"
-                Loaded="ListViewLoaded">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                        <Setter Property="Margin" Value="0,10,0,0" />
-                        <Setter Property="MinHeight" Value="70" />
-                        <Setter Property="Width" Value="350" />
-                        <Setter Property="Padding" Value="0" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-        </StackPanel>
+    <!--
+        The folder list used to sit inside a StackPanel, which measures children with infinite
+        height. The ListView therefore never realised it was taller than the dialog: no scrollbar,
+        no wheel scrolling, and folders beyond the visible area were unreachable once more than a
+        handful of paths were added. Using a Grid with a star-sized row gives the ListView a bounded
+        height so its built-in ScrollViewer works.
+    -->
+    <Grid MaxHeight="520">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" x:Uid="WatchingFolders" />
+        <Grid Grid.Row="1" Height="10" />
+        <ListView
+            Grid.Row="2"
+            ItemTemplateSelector="{StaticResource FolderItemTemplateSelector}"
+            ItemsSource="{x:Bind FolderItemDataSource}"
+            Loaded="ListViewLoaded"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            ScrollViewer.HorizontalScrollMode="Disabled"
+            ScrollViewer.IsDeferredScrollingEnabled="False"
+            ScrollViewer.IsVerticalRailEnabled="True"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollMode="Enabled">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="0,10,0,0" />
+                    <Setter Property="MinHeight" Value="70" />
+                    <Setter Property="Width" Value="350" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </Grid>
 </base:BaseContentDialog>

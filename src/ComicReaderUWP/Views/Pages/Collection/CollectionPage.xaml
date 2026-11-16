@@ -165,11 +165,16 @@
                                     VerticalAlignment="Center"
                                     FontWeight="SemiBold"
                                     Text="{x:Bind ViewModel.ItemCountText, Mode=OneWay}" />
-                                <controls:ViewTypeSelector
-                                    x:Name="ViewTypeSelector"
+                                <StackPanel
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    SelectedViewType="{x:Bind ViewModel.ViewType, Mode=OneWay}" />
+                                    Orientation="Horizontal"
+                                    Spacing="5">
+                                    <controls:LibraryZoomControl x:Name="LibraryZoom" />
+                                    <controls:ViewTypeSelector
+                                        x:Name="ViewTypeSelector"
+                                        SelectedViewType="{x:Bind ViewModel.ViewType, Mode=OneWay}" />
+                                </StackPanel>
                             </Grid>
                         </Grid>
                     </Grid>

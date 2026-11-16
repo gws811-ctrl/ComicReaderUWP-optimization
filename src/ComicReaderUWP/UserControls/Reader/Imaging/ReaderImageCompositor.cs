@@ -349,12 +349,11 @@ internal partial class ReaderImageCompositor : IDisposable
                 return;
             }
 
-            ImageMeta? meta = await ImageLoader.LoadImageMeta(source.Source, new()
-            {
-                Priority = ImageLoadingPriority.READER_IMAGE,
-            });
-
-            if (meta is not null && meta.FrameCount > 1)
+            // Probe the frame count from the already opened stream instead of going through
+            // ImageLoader.LoadImageMeta, which opens the same file a second time (very expensive
+            // on spinning disks).
+            int frameCount = AnimatedBitmapModel.GetFrameCount(stream);
+            if (frameCount > 1)
             {
                 newBitmap = AnimatedBitmapModel.FromStream(_canvasDevice, stream);
             }

@@ -47,6 +47,7 @@ internal sealed partial class CollectionPage : BasePage
         PageActionHandler.RegisterProvider(new CustomActionProvider(new CustomActionHandler(ViewModel)));
         ItemsView.Initialize(ViewModel.ComicSelection, PageActionHandler);
         ViewTypeSelector.ViewTypeChanged += ViewModel.SelectViewType;
+        LibraryZoom.ScaleChanged += scale => ItemsView.ItemScale = scale;
 
         GetMainPageAbility().SetTitle(StringResourceProvider.Instance.Collection);
         GetMainPageAbility().SetIcon(new FontIconSource() { Glyph = "\uF5ED" });

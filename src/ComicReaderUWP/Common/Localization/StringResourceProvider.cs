@@ -208,8 +208,8 @@ public class StringResourceProvider
     public string Play => GetResourceString("Play");
     public string PluginSettingsDescription => GetResourceString("PluginSettingsDescription");
     public string Plugins => GetResourceString("Plugins");
-    public string PreloadPagesAfter => GetResourceString("PreloadPagesAfter");
-    public string PreloadPagesBefore => GetResourceString("PreloadPagesBefore");
+    public string PreloadPagesAfter => GetResourceString("PreloadPagesAfter");    public string PreloadPagesBefore => GetResourceString("PreloadPagesBefore");
+    public string Zoom => GetResourceString("Zoom");
     public string PressKeyCombination => GetResourceString("PressKeyCombination");
     public string Previous => GetResourceString("Previous");
     public string PrivacyPolicy => GetResourceString("PrivacyPolicy");

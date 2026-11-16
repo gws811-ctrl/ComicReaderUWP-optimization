@@ -20,6 +20,7 @@ using ComicReaderUWP.UserControls.Misc;
 using ComicReaderUWP.ViewModels;
 using ComicReaderUWP.Views.Dialogs.EditFilter;
 
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -64,6 +65,8 @@ internal sealed partial class HomePage : BasePage
         GetMainPageAbility().SetCustomNavigationBar(_searchNavigationBar);
 
         ViewModel.Initialize(PageActionHandler, bundle.GetString(RouterConstants.ARG_FILTER_JSON));
+
+        LibraryZoom.ScaleChanged += scale => ItemsView.ItemScale = scale;
 
         ObserveData();
     }
